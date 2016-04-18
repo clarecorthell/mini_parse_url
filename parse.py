@@ -89,7 +89,7 @@ class URLParsed(object):
         self.original = url # store original url but process sanitized url
         self.url = self.sanitize_url(url)
 
-        if not self.url:
+        if not self.url or len(self.url) > 3:
             self.subdomain = None
             self.suffix = None
             self.tld = None
