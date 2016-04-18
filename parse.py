@@ -2,6 +2,7 @@ import re
 from tld import get_tld
 
 MAX_URL_LEN = 1000
+MIN_URL_LEN = 4
 
 class URLParsed(object):
     """
@@ -76,30 +77,33 @@ class URLParsed(object):
 
         - javascript
         - urls longer than 1000 chars
+        - urls shorter than 4 chars
 
         """
-        if len(url) > MAX_URL_LEN or url[:10] == 'javascript':
-            self.original = None # overwrite the egregious cases
+        str_url = url.strip() # strip whitespace
+        # outlying cases
+        if len(str_url) > MAX_URL_LEN or len(str_url) < MIN_URL_LEN or str_url[:10] == 'javascript':
             return None
-        elif url[:4] != 'http':
-            return 'http://' + url
-        return url
+        elif str_url[:4] != 'http':
+            return 'http://' + str_url
+        return str_url
 
     def __init__(self, url):
         self.original = url # store original url but process sanitized url
         self.url = self.sanitize_url(url)
 
-        if not self.url or len(self.url) > 3:
-            self.subdomain = None
-            self.suffix = None
-            self.tld = None
-            self.domain = None
-            self.path = None
-            self.local = None
-        else:
+        if self.url:
             self.subdomain = self.get_subdomain()
             self.suffix = self.get_suffix()
             self.tld = self.parse_tld()
             self.domain = self.get_domain()
             self.path = self.get_path()
             self.local = self.get_local()
+        else:
+            self.url = None
+            self.subdomain = None
+            self.suffix = None
+            self.tld = None
+            self.domain = None
+            self.path = None
+            self.local = None

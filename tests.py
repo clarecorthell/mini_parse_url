@@ -78,16 +78,18 @@ class TestLinkParser(object):
         assert_equal(URLParsed('knitcrate').path, '/knitcrate') # appends /
         assert_equal(URLParsed('knitcrate').local, True)
 
-        assert_equal(URLParsed('javascript:void(0);').original, None)
+        assert_equal(URLParsed('javascript:void(0);').original, 'javascript:void(0);')
+        assert_equal(URLParsed('javascript:void(0);').url, None)
         assert_equal(URLParsed('javascript:void(0);').domain, None)
         assert_equal(URLParsed('javascript:void(0);').subdomain, None)
         assert_equal(URLParsed('javascript:void(0);').tld, None)
         assert_equal(URLParsed('javascript:void(0);').path, None)
         assert_equal(URLParsed('javascript:void(0);').local, None)
 
-        assert_equal(URLParsed('  ').original, None)
+        assert_equal(URLParsed('  ').original, '  ')
+        assert_equal(URLParsed('  ').url, None)
         assert_equal(URLParsed('  ').domain, None)
         assert_equal(URLParsed('  ').subdomain, None)
         assert_equal(URLParsed('  ').tld, None)
         assert_equal(URLParsed('  ').path, None)
-        assert_equal(URLParsed('  ').local, True)
+        assert_equal(URLParsed('  ').local, None)
