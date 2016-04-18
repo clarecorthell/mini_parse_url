@@ -7,7 +7,7 @@ dependencies
 
 imports
 
-`from parse_url import URLParsed`
+`from mini_parse_url.parse import URLParsed`
 
 Eats normal links...
 ```
