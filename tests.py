@@ -1,5 +1,5 @@
 from nose.tools import assert_equal
-from mattermark.utils.link_parser import URLParsed
+from parse import URLParsed
 
 class TestLinkParser(object):
 
