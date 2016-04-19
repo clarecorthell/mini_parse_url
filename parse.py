@@ -67,6 +67,25 @@ class URLParsed(object):
             return path
         return None
 
+    def get_path_list(self):
+        """
+        Returns list of elements in the path
+        Removes query string
+
+        """
+        try:
+            str_path = self.path.strip('/').split('/')
+        except:
+            return None
+
+        # if it exists, assign query string and strip it
+        last_elem = str_path[-1]
+        if '?' in last_elem:
+            last_path_elem, self.query_string = last_elem.split('?')
+            return str_path[:-1] + [last_path_elem]
+
+        return str_path
+
     def get_local(self):
         return False if self.domain else True
 
@@ -91,6 +110,14 @@ class URLParsed(object):
     def __init__(self, url):
         self.original = url # store original url but process sanitized url
         self.url = self.sanitize_url(url)
+        self.subdomain = None
+        self.suffix = None
+        self.tld = None
+        self.domain = None
+        self.path = None
+        self.local = None
+        self.path_list = None
+        self.query_string = None
 
         if self.url:
             self.subdomain = self.get_subdomain()
@@ -99,11 +126,5 @@ class URLParsed(object):
             self.domain = self.get_domain()
             self.path = self.get_path()
             self.local = self.get_local()
-        else:
-            self.url = None
-            self.subdomain = None
-            self.suffix = None
-            self.tld = None
-            self.domain = None
-            self.path = None
-            self.local = None
+            self.query_string = None
+            self.path_list = self.get_path_list()
