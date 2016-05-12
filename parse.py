@@ -80,9 +80,14 @@ class URLParsed(object):
 
         # if it exists, assign query string and strip it
         last_elem = str_path[-1]
+
+        # if it's a query string, strip and return it
         if '?' in last_elem:
-            last_path_elem, self.query_string = last_elem.split('?')
+            position = last_elem.find('?')
+            last_path_elem = last_elem[:position]
+            self.query_string = last_elem[position+1:] # remove '?'
             return str_path[:-1] + [last_path_elem]
+            # TODO add query string parser to dict
 
         return str_path
 
@@ -107,7 +112,7 @@ class URLParsed(object):
             return 'http://' + str_url
         return str_url
 
-    def __init__(self, url):
+    def __init__(self, url, test=False):
         self.original = url # store original url but process sanitized url
         self.url = self.sanitize_url(url)
         self.subdomain = None
@@ -128,3 +133,14 @@ class URLParsed(object):
             self.local = self.get_local()
             self.query_string = None
             self.path_list = self.get_path_list()
+
+        if test:
+            print 'url: ', self.url
+            print 'subdomain: ', self.subdomain
+            print 'suffix: ', self.suffix
+            print 'tld: ', self.tld
+            print 'domain: ', self.domain
+            print 'path: ', self.path
+            print 'local: ', self.local
+            print 'path_list: ', self.path_list
+            print 'query_string: ', self.query_string
