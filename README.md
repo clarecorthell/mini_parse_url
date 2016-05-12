@@ -54,4 +54,4 @@ Basically, if you're consuming a webpage and structuring the `href`, this makes 
 
 ### Tests
 
-`nosetests`
+Run `nosetests` at root of the repo.
