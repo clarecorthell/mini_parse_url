@@ -1,15 +1,15 @@
 # mini_parse_url
 parse_url utility
 
-dependencies
+### Dependencies
 
 `pip install tld`
 
-imports
+### Import
 
 `from mini_parse_url.parse import URLParsed`
 
-Eats normal links...
+### Use: Eat normal links, Get structure back.
 ```
 ps = URLParsed('www.knitcrate.com/brochure.html')
 
@@ -31,7 +31,7 @@ ps.local
 ps.original
 >>> 'www.knitcrate.com/brochure.html'
 ```
-And relative links, too.
+And relative links, too:
 ```
 ps = URLParsed('brochure.html')
 
@@ -51,3 +51,7 @@ ps.original
 ```
 
 Basically, if you're consuming a webpage and structuring the `href`, this makes it easier to reconstruct full urls. Enjoy!
+
+### Tests
+
+`nosetests`
